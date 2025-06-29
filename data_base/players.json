@@ -1,0 +1,20 @@
+[
+    {
+        "last_name": "hello",
+        "first_name": "sam",
+        "date_of_birth": "12/12/1873",
+        "national_id": "kd25487"
+    },
+    {
+        "last_name": "francois",
+        "first_name": "courge",
+        "date_of_birth": "12/05/1999",
+        "national_id": "sz21547"
+    },
+    {
+        "last_name": "jean michel",
+        "first_name": "khan",
+        "date_of_birth": "08/06/2003",
+        "national_id": "fa12547"
+    }
+]

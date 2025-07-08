@@ -71,3 +71,59 @@ class PlayerView:
         for player in players:
             print(f"- {player.first_name} {player.last_name} | Né(e) le {player.date_of_birth} | ID : {player.national_id}")
         print()
+
+class DisplayTournamentView:
+    def get_tournament_info(self):
+        print("\n=== Création d'un nouveau tournoi ===")
+        name = input("Nom du tournoi : ")
+        location = input("Lieu : ")
+        date = input("Date (jj/mm/aaaa) : ")
+        
+        rounds = input("Nombre de rounds (défaut 4) : ")
+        rounds = int(rounds) if rounds.isdigit() else 4
+
+        print("Contrôle du temps :")
+        print("1. Bullet")
+        print("2. Blitz")
+        print("3. Coup rapide")
+        time_control_choice = input("Choix (1/2/3) : ")
+        time_control = {
+            "1": "Bullet",
+            "2": "Blitz",
+            "3": "Coup rapide"
+        }.get(time_control_choice, "Blitz")
+
+        description = input("Description (optionnel) : ")
+
+        return {
+            "name": name,
+            "location": location,
+            "date": date,
+            "rounds": rounds,
+            "time_control": time_control,
+            "description": description
+        }
+
+    def confirm_tournament_created(self, tournament):
+        print(f"\n✅ Le tournoi '{tournament.name}' a bien été créé et sauvegardé.")
+
+    def show_all_tournaments(self, tournaments):
+        print("\n=== Liste des tournois ===\n")
+        if not tournaments:
+            print("Aucun tournoi enregistré.")
+            return
+
+        for idx, tournament in enumerate(tournaments, 1):
+            if isinstance(tournament, dict):
+                name = tournament.get("name", "Inconnu")
+                location = tournament.get("location", "Inconnu")
+                date = tournament.get("date", "Inconnue")
+                time_control = tournament.get("time_control", "Non défini")
+            else:
+                name = tournament.name
+                location = tournament.location
+                date = tournament.date
+                time_control = tournament.time_control
+
+            print(f"{idx}. {name} - {location} - {date} - {time_control}")
+

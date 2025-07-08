@@ -28,5 +28,17 @@
         "first_name": "antoine",
         "date_of_birth": "03/01/1999",
         "national_id": "fr54254"
+    },
+    {
+        "last_name": "bond",
+        "first_name": "james",
+        "date_of_birth": "06/05/1978",
+        "national_id": "fr15487"
+    },
+    {
+        "last_name": "joe",
+        "first_name": "biden",
+        "date_of_birth": "02/03/1945",
+        "national_id": "ze15487"
     }
 ]

@@ -1,50 +1,51 @@
 import json
-from operator import attrgetter
+import os
+from views.view_main import PlayerView
 from models.players import Player
-from views.view_main import DisplayPlayersView
+
+DATA_PATH = "data_base/players.json"
 
 
 class PlayerController:
     def __init__(self):
-        self.view = DisplayPlayersView()
+        self.view = PlayerView()
 
     def add_player(self):
-        new_player = self.view.prompt_player_info()
-        players = self.load_players()
-        players.append(new_player.to_dict())
-        self.save_players(players)
-        print("\nJoueur ajouté avec succès !\n")
+        last_name, first_name, date_of_birth, national_id = self.view.prompt_new_player()
+        player = Player(last_name, first_name, date_of_birth, national_id)
+        players = load_players()
+        players.append(player)
+        save_players(players)
+        self.view.confirm_player_added(player)
 
-    def display_sorted_players(self):
-        players_data = self.load_players()
-        players = [Player(**player_info) for player_info in players_data]
+    def list_players(self):
+        players = load_players()
+        self.view.show_all_players(players)
 
-        while True:
-            print("1 - Afficher les joueurs par ordre alphabétique")
-            print("2 - Afficher les joueurs par classement")
-            print("3 - Retour au menu principal")
-            choice = input("--> ")
 
-            if choice == "1":
-                players.sort(key=attrgetter("last_name"))
-                self.view.display_players(players)
-            elif choice == "2":
-                players.sort(key=attrgetter("ranking"))
-                self.view.display_players(players)
-            elif choice == "3":
-                break
-            else:
-                print("Choix invalide. Veuillez réessayer.")
+def save_players(players):
+    os.makedirs(os.path.dirname(DATA_PATH), exist_ok=True)
+    with open(DATA_PATH, "w", encoding="utf-8") as f:
+        json.dump([p.to_dict() for p in players], f, indent=4, ensure_ascii=False)
 
-    @staticmethod
-    def load_players():
+
+def load_players():
+    if not os.path.exists(DATA_PATH):
+        return []
+
+    with open(DATA_PATH, "r", encoding="utf-8") as f:
         try:
-            with open("data_base/players.json", "r", encoding="utf-8") as file:
-                return json.load(file)
-        except FileNotFoundError:
+            data = json.load(f)
+        except json.JSONDecodeError:
             return []
 
-    @staticmethod
-    def save_players(players):
-        with open("data_base/players.json", "w", encoding="utf-8") as file:
-            json.dump(players, file, indent=4, ensure_ascii=False)
+        players = []
+        for p in data:
+            player = Player(
+                last_name=p["last_name"],
+                first_name=p["first_name"],
+                date_of_birth=p["date_of_birth"],
+                national_id=p["national_id"]
+            )
+            players.append(player)
+        return players

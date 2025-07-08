@@ -1,0 +1,22 @@
+[
+    {
+        "name": "debutant",
+        "location": "clamart",
+        "date": "08/07/2025",
+        "rounds": 4,
+        "time_control": "Blitz",
+        "description": "un tournoi pour les debutants",
+        "players": [],
+        "rounds_list": []
+    },
+    {
+        "name": "intermidiare",
+        "location": "antony",
+        "date": "07/07/2025",
+        "rounds": 6,
+        "time_control": "Coup rapide",
+        "description": "un tournoi pour les intermidiaire",
+        "players": [],
+        "rounds_list": []
+    }
+]

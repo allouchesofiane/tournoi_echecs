@@ -40,5 +40,17 @@
         "first_name": "biden",
         "date_of_birth": "02/03/1945",
         "national_id": "ze15487"
+    },
+    {
+        "last_name": "amar",
+        "first_name": "yezzou",
+        "date_of_birth": "05/09/1978",
+        "national_id": "er45217"
+    },
+    {
+        "last_name": "franck",
+        "first_name": "arnaud",
+        "date_of_birth": "02/03/2014",
+        "national_id": "df25412"
     }
 ]

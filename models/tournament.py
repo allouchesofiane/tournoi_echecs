@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
-
+from datetime import datetime
+4
 data_file = Path("data_base/tournaments.json")
 data_file.parent.mkdir(parents=True, exist_ok=True)
 data_file.touch(exist_ok=True)
@@ -49,3 +50,48 @@ class Tournament:
                 return json.load(f)
         except (FileNotFoundError, json.JSONDecodeError):
             return []
+
+
+class Round:
+    """Représente un match entre deux joueurs avec un score chacun."""
+    ROUND_NUMBER = 1
+
+    def __init__(self, player_1, player_2, score_1=0.0, score_2=0.0):
+        self.name = f"Round {Round.ROUND_NUMBER}"
+        Round.ROUND_NUMBER += 1
+        self.player_1 = player_1
+        self.player_2 = player_2
+        self.score_1 = score_1
+        self.score_2 = score_2
+
+    def to_tuple(self):
+        return ([self.player_1, self.score_1], [self.player_2, self.score_2])
+
+    def __str__(self):
+        return f"{self.name} : {self.player_1} vs {self.player_2} | Scores : {self.score_1} - {self.score_2}"
+
+
+class Tour:
+    """Représente un tour complet avec une liste de rounds et des timestamps."""
+    def __init__(self, name=None, rounds=None, start_time=None, end_time=None):
+        self.name = name if name else "Tour"
+        self.rounds = rounds if rounds else []
+        self.start_time = start_time if start_time else datetime.now().isoformat()
+        self.end_time = end_time  # à remplir manuellement à la fin du tour
+
+    def add_round(self, round_instance):
+        self.rounds.append(round_instance)
+
+    def close_tour(self):
+        self.end_time = datetime.now().isoformat()
+
+    def to_dict(self):
+        return {
+            "name": self.name,
+            "rounds": [r.to_tuple() for r in self.rounds],
+            "start_time": self.start_time,
+            "end_time": self.end_time,
+        }
+
+    def __str__(self):
+        return f"{self.name} | Début : {self.start_time} | Fin : {self.end_time or 'En cours'}"

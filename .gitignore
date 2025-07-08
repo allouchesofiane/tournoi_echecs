@@ -1,0 +1,15 @@
+
+# === Fichiers de config de l'éditeur (VSCode) ===
+.vscode/
+# Fichiers Python compilés
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environnements virtuels
+venv/
+env/
+ENV/
+.venv/
+
+

@@ -2,6 +2,7 @@ import json
 import os
 from models.players import Player
 from views.view_main import PlayerView
+from controllers.tournament_controller import TournamentController
 
 DATA_FILE = "data_base/players.json"
 os.makedirs("data_base", exist_ok=True)
@@ -28,7 +29,8 @@ def main():
         print("\n=== Menu Principal ===")
         print("1. Ajouter un joueur")
         print("2. Afficher les joueurs")
-        print("3. Quitter")
+        print("3. Gérer les tournois")
+        print("4. Quitter")        
         choice = input("Votre choix : ")
 
         if choice == "1":
@@ -42,11 +44,15 @@ def main():
             view.show_all_players(players)
 
         elif choice == "3":
+            tournament_controller = TournamentController()
+            tournament_controller.create_tournament()
+        
+        elif choice == "4":
             print("Au revoir !")
             break
 
         else:
-            print("Choix invalide. Veuillez entrer 1, 2 ou 3.")
+            print("Choix invalide. Veuillez entrer 1, 2 ou 3, 4.")
 
 if __name__ == "__main__":
     main()

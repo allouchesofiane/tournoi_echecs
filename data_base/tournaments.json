@@ -18,5 +18,75 @@
         "description": "un tournoi pour les intermidiaire",
         "players": [],
         "rounds_list": []
+    },
+    {
+        "name": "pro",
+        "location": "saint denis",
+        "date": "05/07/2025",
+        "rounds": 8,
+        "time_control": "Bullet",
+        "description": "un tournoi pour les pro",
+        "players": [],
+        "rounds_list": []
+    },
+    {
+        "name": "amateur",
+        "location": "paris",
+        "date": "06/08/2025",
+        "rounds": 8,
+        "time_control": "Blitz",
+        "description": "un tournoi pour les amateurs",
+        "players": [],
+        "rounds_list": []
+    },
+    {
+        "name": "semi pro",
+        "location": "boulogne",
+        "date": "05/09/2025",
+        "rounds": 8,
+        "time_control": "Blitz",
+        "description": "un tournoi pour les semi pro",
+        "players": [],
+        "rounds_list": []
+    },
+    {
+        "name": "encore pro",
+        "location": "lens",
+        "date": "04/08/2025",
+        "rounds": 8,
+        "time_control": "Blitz",
+        "description": "encore un tournoi pour les pros",
+        "players": [],
+        "rounds_list": []
+    },
+    {
+        "name": "prmier tournoi",
+        "location": "saint tropez ",
+        "date": "02/06/2025",
+        "rounds": 6,
+        "time_control": "Blitz",
+        "description": "un tournoi le premier ",
+        "players": [],
+        "rounds_list": []
+    },
+    {
+        "name": "tournoi national",
+        "location": "france",
+        "date": "05/04/2025",
+        "rounds": 6,
+        "time_control": "Blitz",
+        "description": "un tournoi national",
+        "players": [],
+        "rounds_list": []
+    },
+    {
+        "name": "tournoi benjamin",
+        "location": "versaille",
+        "date": "05/05/2025",
+        "rounds": 6,
+        "time_control": "Bullet",
+        "description": "un tournoi pour les benjamins ",
+        "players": [],
+        "rounds_list": []
     }
 ]

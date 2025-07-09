@@ -52,5 +52,17 @@
         "first_name": "arnaud",
         "date_of_birth": "02/03/2014",
         "national_id": "df25412"
+    },
+    {
+        "last_name": "marc",
+        "first_name": "vimel",
+        "date_of_birth": "02/07/1989",
+        "national_id": "te25417"
+    },
+    {
+        "last_name": "sanchez",
+        "first_name": "thierry",
+        "date_of_birth": "02/11/1959",
+        "national_id": "sa12457"
     }
 ]

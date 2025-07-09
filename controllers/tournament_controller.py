@@ -2,6 +2,7 @@ import json
 import os
 from models.tournament import Tournament
 from views.view_main import DisplayTournamentView
+from models.players import Player
 
 DATABASE_PATH = "data_base/tournaments.json"
 
@@ -59,17 +60,50 @@ class TournamentController:
         time_control = input("Contrôle du temps (Blitz / Bullet / Coup rapide) : ") or "Blitz"
         description = input("Description : ")
 
+    # Charger les joueurs disponibles
+        try:
+            with open("data_base/players.json", "r", encoding="utf-8") as f:
+                data = json.load(f)
+                players = [Player(**p) for p in data]
+        except (FileNotFoundError, json.JSONDecodeError):
+            players = []
+
+        # Afficher les joueurs avec un index
+        print("\n=== Joueurs disponibles ===")
+        if not players:
+            print("Aucun joueur disponible. Ajoutez des joueurs avant de créer un tournoi.")
+            return
+
+        for idx, player in enumerate(players, 1):
+            print(f"{idx}. {player.first_name} {player.last_name} ({player.national_id})")
+
+        # Sélection des joueurs
+        print("\nEntrez les numéros des joueurs à ajouter au tournoi (ex: 1,3,5). Minimum 2 joueurs.")
+        selected = input("Sélection : ")
+        selected_indices = [int(i.strip()) - 1 for i in selected.split(",") if i.strip().isdigit()]
+
+        if len(selected_indices) < 2:
+            print(" Vous devez sélectionner au moins 2 joueurs pour créer un tournoi.")
+            return
+
+        selected_players = [players[i] for i in selected_indices if 0 <= i < len(players)]
+        player_ids = [p.national_id for p in selected_players]
+
+        # Création du tournoi avec les joueurs sélectionnés
         new_tournament = Tournament(
             name=name,
             location=location,
             date=date,
             rounds=int(rounds),
             time_control=time_control,
-            description=description
+            description=description,
+            players=player_ids
         )
 
         self.save_tournament(new_tournament.to_dict())
-        print("\n✅ Tournoi ajouté avec succès.")
+        print("\n Tournoi ajouté avec succès avec les joueurs sélectionnés.")
+
+
 
     def list_tournaments(self):
         tournaments = self.load_tournaments()

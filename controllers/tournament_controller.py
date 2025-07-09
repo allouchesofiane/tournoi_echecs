@@ -17,9 +17,8 @@ class TournamentController:
             print("\n=== Menu Tournoi ===")
             print("1. Créer un nouveau tournoi")
             print("2. Afficher les tournois existants")
-            print("3. Démarrer le premier tour d’un tournoi")
-            print("4. Afficher les tours et matchs d’un tournoi")
-            print("5. Retour au menu principal")
+            print("3. Créer le 1er tour d’un tournoi")
+            print("4. Retour au menu principal")
             choice = input("Votre choix : ")
 
             if choice == "1":
@@ -27,13 +26,12 @@ class TournamentController:
             elif choice == "2":
                 self.list_tournaments()
             elif choice == "3":
-                self.start_first_round_menu()
+                self.create_first_round()
             elif choice == "4":
-                self.show_rounds_and_matches()
-            elif choice == "5":
                 break
             else:
-                print("Choix invalide. Veuillez entrer un chiffre de 1 à 5.")
+                print("Choix invalide. Veuillez entrer 1, 2, 3 ou 4.")
+
 
     def load_tournaments(self):
         if not os.path.exists(DATABASE_PATH):
@@ -270,3 +268,53 @@ class TournamentController:
                 p1, s1 = match[0]
                 p2, s2 = match[1]
                 print(f"  ➤ {p1} ({s1}) vs {p2} ({s2})")
+
+    def create_first_round(self, tournament):
+        """Créer automatiquement le premier tour du tournoi"""
+        player_ids = tournament.players  # liste des national_id
+
+        # Charger tous les joueurs depuis le fichier
+        try:
+            with open("data_base/players.json", "r", encoding="utf-8") as f:
+                all_players_data = json.load(f)
+                all_players = [Player(**p) for p in all_players_data]
+        except (FileNotFoundError, json.JSONDecodeError):
+            print("Erreur de chargement des joueurs.")
+            return
+
+        # Filtrer les joueurs du tournoi
+        selected_players = [p for p in all_players if p.national_id in player_ids]
+
+        # Mélanger les joueurs aléatoirement
+        from random import shuffle
+        shuffle(selected_players)
+
+        # Générer les matchs (paire de joueurs)
+        matches = []
+        for i in range(0, len(selected_players), 2):
+            if i + 1 < len(selected_players):
+                match = Match(selected_players[i].national_id, selected_players[i+1].national_id)
+                matches.append(match)
+
+        # Créer un objet Tour avec les matchs
+        round_1 = Tour(name="Tour 1", matchs=matches)
+
+        # Ajouter le tour au tournoi et sauvegarder
+        tournament.rounds_list.append(round_1.to_dict())
+
+        self.save_tournament(tournament.to_dict())
+        print("\n✅ Premier tour du tournoi généré automatiquement.")
+
+    def save_tournament(self, tournament_data):
+        try:
+            with open(DATABASE_PATH, "r", encoding="utf-8") as f:
+                tournaments = json.load(f)
+        except (FileNotFoundError, json.JSONDecodeError):
+            tournaments = []
+
+        # Remplacer le tournoi ayant le même nom
+        tournaments = [t for t in tournaments if t["name"] != tournament_data["name"]]
+        tournaments.append(tournament_data)
+
+        with open(DATABASE_PATH, "w", encoding="utf-8") as f:
+            json.dump(tournaments, f, indent=4, ensure_ascii=False)

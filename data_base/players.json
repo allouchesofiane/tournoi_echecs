@@ -64,5 +64,17 @@
         "first_name": "thierry",
         "date_of_birth": "02/11/1959",
         "national_id": "sa12457"
+    },
+    {
+        "last_name": "finck",
+        "first_name": "frederic",
+        "date_of_birth": "02/09/1963",
+        "national_id": "de25417"
+    },
+    {
+        "last_name": "arc",
+        "first_name": "mechel",
+        "date_of_birth": "05/08/2011",
+        "national_id": "fr25147"
     }
 ]

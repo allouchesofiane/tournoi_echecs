@@ -8,26 +8,26 @@ data_file.touch(exist_ok=True)
 
 
 class Tournament:
-    def __init__(self, name, location, date, rounds=4, time_control="Blitz", description="", players=None, rounds_list=None):
+    def __init__(self, name, location, date, matchs=4, time_control="Blitz", description="", players=None, matchs_list=None):
         self.name = name
         self.location = location
         self.date = date
-        self.rounds = rounds
+        self.matchs = matchs
         self.time_control = time_control
         self.description = description
         self.players = players if players else []
-        self.rounds_list = rounds_list if rounds_list else []
+        self.matchs_list = matchs_list if matchs_list else []
 
     def to_dict(self):
         return {
             "name": self.name,
             "location": self.location,
             "date": self.date,
-            "rounds": self.rounds,
+            "matchs": self.matchs,
             "time_control": self.time_control,
             "description": self.description,
             "players": self.players,
-            "rounds_list": self.rounds_list
+            "matchs_list": self.matchs_list
         }
 
     @staticmethod
@@ -52,13 +52,13 @@ class Tournament:
             return []
 
 
-class Round:
+class Match:
     """Représente un match entre deux joueurs avec un score chacun."""
-    ROUND_NUMBER = 1
+    MATCH_NUMBER = 1
 
     def __init__(self, player_1, player_2, score_1=0.0, score_2=0.0):
-        self.name = f"Round {Round.ROUND_NUMBER}"
-        Round.ROUND_NUMBER += 1
+        self.name = f"Match {Match.MATCH_NUMBER}"
+        Match.MATCH_NUMBER += 1
         self.player_1 = player_1
         self.player_2 = player_2
         self.score_1 = score_1
@@ -72,15 +72,15 @@ class Round:
 
 
 class Tour:
-    """Représente un tour complet avec une liste de rounds et des timestamps."""
-    def __init__(self, name=None, rounds=None, start_time=None, end_time=None):
+    """Représente un tour complet avec une liste de matchs et des timestamps."""
+    def __init__(self, name=None, matchs=None, start_time=None, end_time=None):
         self.name = name if name else "Tour"
-        self.rounds = rounds if rounds else []
+        self.matchs = matchs if matchs else []
         self.start_time = start_time if start_time else datetime.now().isoformat()
         self.end_time = end_time  # à remplir manuellement à la fin du tour
 
-    def add_round(self, round_instance):
-        self.rounds.append(round_instance)
+    def add_match(self, match_instance):
+        self.matchs.append(match_instance)
 
     def close_tour(self):
         self.end_time = datetime.now().isoformat()
@@ -88,7 +88,7 @@ class Tour:
     def to_dict(self):
         return {
             "name": self.name,
-            "rounds": [r.to_tuple() for r in self.rounds],
+            "matchs": [r.to_tuple() for r in self.matchs],
             "start_time": self.start_time,
             "end_time": self.end_time,
         }

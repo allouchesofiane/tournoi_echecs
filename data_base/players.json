@@ -88,5 +88,11 @@
         "first_name": "milann",
         "date_of_birth": "02/06/1999",
         "national_id": "de15427"
+    },
+    {
+        "last_name": "fika",
+        "first_name": "clara",
+        "date_of_birth": "07/08/2002",
+        "national_id": "cv12345"
     }
 ]

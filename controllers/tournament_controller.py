@@ -19,7 +19,8 @@ class TournamentController:
             print("2. Afficher les tournois existants")
             print("3. Créer le 1er tour d’un tournoi")
             print("4. Afficher les tours et matchs d’un tournoi") 
-            print("5. Retour au menu principal")
+            print("5. Créer le tour suivant d’un tournoi")  
+            print("6. Retour au menu principal")
 
             choice = input("Votre choix : ")
 
@@ -30,11 +31,13 @@ class TournamentController:
             elif choice == "3":
                 self.start_first_round_menu()
             elif choice == "4":
-                self.show_rounds_and_matches()  # 👈 appel à la méthode d'affichage
-            elif choice == "5":
+                self.show_rounds_and_matches()
+            elif choice == "5": 
+                self.create_next_round_menu() 
+            elif choice == "6":
                 break
             else:
-                print("Choix invalide. Veuillez entrer un nombre entre 1 et 5.")
+                print("Choix invalide. Veuillez entrer un nombre entre 1 et 6.")
 
 
     def load_tournaments(self):
@@ -260,7 +263,8 @@ class TournamentController:
             return
 
         tournament = tournaments[int(choice) - 1]
-    
+        self.create_next_round(tournament)
+
         if not tournament.rounds_list:  # ou tournament.rounds_list selon ta version
             print("Aucun tour n’a été enregistré pour ce tournoi.")
             return
@@ -331,3 +335,98 @@ class TournamentController:
 
         with open(DATABASE_PATH, "w", encoding="utf-8") as f:
             json.dump(tournaments, f, indent=4, ensure_ascii=False)
+
+
+    def create_next_round(self, tournament: Tournament):
+        """Crée le prochain tour en fonction des scores précédents et en évitant les re-matches."""
+        print("\n=== Création du tour suivant ===")
+
+        # Charger tous les joueurs depuis le fichier JSON
+        try:
+            with open("data_base/players.json", "r", encoding="utf-8") as f:
+                all_players_data = json.load(f)
+                all_players = [Player(**p) for p in all_players_data]
+        except (FileNotFoundError, json.JSONDecodeError):
+            print("Erreur de chargement des joueurs.")
+            return
+
+        # Récupérer les joueurs du tournoi avec leurs scores
+        player_scores = {player_id: 0.0 for player_id in tournament.players}
+
+        # Parcourir tous les tours pour calculer les scores et l'historique des matchs
+        previous_matches = set()
+        for round_data in tournament.rounds_list:
+            for match in round_data["matchs"]:
+                p1, s1 = match[0]
+                p2, s2 = match[1]
+                previous_matches.add(frozenset([p1, p2]))
+                player_scores[p1] += s1
+                player_scores[p2] += s2
+
+        # Trier les joueurs par score décroissant
+        sorted_players = sorted(player_scores.items(), key=lambda x: x[1], reverse=True)
+        player_ids_sorted = [pid for pid, score in sorted_players]
+
+        # Générer des paires en évitant les re-matches
+        matches = []
+        used_players = set()
+        i = 0
+        while i < len(player_ids_sorted):
+            p1 = player_ids_sorted[i]
+            if p1 in used_players:
+                    i += 1
+                    continue
+            for j in range(i+1, len(player_ids_sorted)):
+                p2 = player_ids_sorted[j]
+                if p2 not in used_players and frozenset([p1, p2]) not in previous_matches:
+                    matches.append(Match(p1, p2))
+                    used_players.update([p1, p2])
+                    break
+            else:
+                # Aucun adversaire disponible (impair ou tout le monde a déjà joué contre lui)
+                i += 1
+
+        # Création du nouveau tour
+        round_number = len(tournament.rounds_list) + 1
+        new_round = Tour(name=f"Tour {round_number}", matchs=matches)
+
+        # Affichage des matchs
+        print(f"\nMatchs du {new_round.name} :")
+        for match in matches:
+            print(match)
+
+        print("\n=== Saisie des scores ===")
+        for match in matches:
+            try:
+                score_1 = float(input(f"Score pour {match.player_1} : "))
+                score_2 = float(input(f"Score pour {match.player_2} : "))
+            except ValueError:
+                print("Entrée invalide. Les scores doivent être numériques.")
+                return
+            match.score_1 = score_1
+            match.score_2 = score_2
+
+        new_round.close_tour()
+
+        # Ajouter le tour au tournoi et sauvegarder
+        tournament.rounds_list.append(new_round.to_dict())
+        self.update_tournament(tournament)
+
+        print(f"\n✅ {new_round.name} terminé et enregistré.")
+    def create_next_round_menu(self):
+        tournaments = self.load_tournaments()
+        if not tournaments:
+            print("Aucun tournoi disponible.")
+            return
+
+        print("\n=== Sélectionner un tournoi pour le prochain tour ===")
+        for idx, t in enumerate(tournaments, 1):
+            print(f"{idx}. {t.name} ({t.date})")
+
+        choice = input("Entrez le numéro du tournoi : ")
+        if not choice.isdigit() or not (1 <= int(choice) <= len(tournaments)):
+            print("Choix invalide.")
+            return
+
+        tournament = tournaments[int(choice) - 1]
+        self.create_next_round(tournament)

@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 from datetime import datetime
-4
+
 data_file = Path("data_base/tournaments.json")
 data_file.parent.mkdir(parents=True, exist_ok=True)
 data_file.touch(exist_ok=True)

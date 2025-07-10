@@ -1,6 +1,6 @@
-# main_controller.py
+
 from views.view_main import MainDisplay, ClearScreen, InputView, MessageView
-# (on ajoutera les imports pour les sous-contrôleurs plus tard)
+
 
 class MainController:
     """Contrôleur principal qui gère le menu principal de l'application."""
@@ -19,16 +19,14 @@ class MainController:
             choice = self.input_view.get_input("Votre choix")
 
             if choice == "1":
-                self.message.show_message("→ Accès au menu joueur (à implémenter)")
-                # Ici, on appellera le PlayerController plus tard
+                self.message.show_message("→ Accès au menu joueur")
                 input("Appuyez sur Entrée pour revenir au menu.")
             elif choice == "2":
-                self.message.show_message("→ Accès au menu tournoi (à implémenter)")
-                # Ici, on appellera le TournamentController plus tard
+                self.message.show_message("→ Accès au menu tournoi")
                 input("Appuyez sur Entrée pour revenir au menu.")
             elif choice == "3":
-                self.message.show_message("→ À bientôt 👋")
+                self.message.show_message("→ À bientôt")
                 break
             else:
-                self.message.show_message("⚠️ Choix invalide. Veuillez réessayer.")
+                self.message.show_message("Choix invalide. Veuillez réessayer.")
                 input("Appuyez sur Entrée pour continuer.")

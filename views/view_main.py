@@ -38,6 +38,7 @@ class MessageView:
 
 
 class DateView:
+
     """Affiche l'heure de début et de fin d’un tour."""
     def display_tournament_time(self):
         input("Appuyez sur Entrée pour commencer le tour.")
@@ -49,6 +50,7 @@ class DateView:
         return begin, end
 
 class PlayerView:
+
     def get_player_info(self):
         """Demande à l'utilisateur de saisir les infos d'un joueur"""
         print("=== Création d'un nouveau joueur ===")
@@ -70,9 +72,10 @@ class PlayerView:
         print("\n=== Liste des joueurs enregistrés ===")
         for player in players:
             print(f"- {player.first_name} {player.last_name} | Né(e) le {player.date_of_birth} | ID : {player.national_id}")
-        print()
+        
 
 class DisplayTournamentView:
+    
     def get_tournament_info(self):
         print("\n=== Création d'un nouveau tournoi ===")
         name = input("Nom du tournoi : ")

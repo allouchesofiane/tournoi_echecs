@@ -19,8 +19,9 @@ class TournamentController:
             print("2. Afficher les tournois existants")
             print("3. Créer le 1er tour d’un tournoi")
             print("4. Afficher les tours et matchs d’un tournoi") 
-            print("5. Créer le tour suivant d’un tournoi")  
-            print("6. Retour au menu principal")
+            print("5. Créer le tour suivant d’un tournoi")
+            print("6. Afficher le classement final d’un tournoi")  
+            print("7. Retour au menu principal")
 
             choice = input("Votre choix : ")
 
@@ -33,8 +34,10 @@ class TournamentController:
             elif choice == "4":
                 self.show_rounds_and_matches()
             elif choice == "5": 
-                self.create_next_round_menu() 
+                self.create_next_round_menu()
             elif choice == "6":
+                self.show_final_ranking() 
+            elif choice == "7":
                 break
             else:
                 print("Choix invalide. Veuillez entrer un nombre entre 1 et 6.")
@@ -164,7 +167,7 @@ class TournamentController:
         # Sauvegarde dans le fichier JSON
         self.update_tournament(tournament)
 
-        print(f"\n✅ {round_name} démarré avec {len(matches)} matchs.")
+        print(f"\n{round_name} démarré avec {len(matches)} matchs.")
 
     def update_tournament(self, tournament):
         """Remplace le tournoi existant par sa version mise à jour dans le fichier JSON"""
@@ -201,7 +204,6 @@ class TournamentController:
 
         tournament = tournaments[int(choice) - 1]
         # Créer un tour
-
         print("\n--- Démarrage du premier tour ---")
 
         players = tournament.players
@@ -210,7 +212,6 @@ class TournamentController:
             return
 
         # Générer des paires aléatoires
-        import random
         random.shuffle(players)
 
         matchs = []
@@ -245,7 +246,7 @@ class TournamentController:
         with open(DATABASE_PATH, "w", encoding="utf-8") as f:
             json.dump(updated_data, f, indent=4, ensure_ascii=False)
 
-        print("\n✅ Tour 1 terminé et enregistré.")
+        print("\nTour 1 terminé et enregistré.")
 
     def show_rounds_and_matches(self):
         tournaments = self.load_tournaments()
@@ -320,7 +321,7 @@ class TournamentController:
         tournament.rounds_list.append(round_1.to_dict())
 
         self.save_tournament(tournament.to_dict())
-        print("\n✅ Premier tour du tournoi généré automatiquement.")
+        print("\nPremier tour du tournoi généré automatiquement.")
 
     def save_tournament(self, tournament_data):
         try:
@@ -413,6 +414,8 @@ class TournamentController:
         self.update_tournament(tournament)
 
         print(f"\n✅ {new_round.name} terminé et enregistré.")
+
+
     def create_next_round_menu(self):
         tournaments = self.load_tournaments()
         if not tournaments:
@@ -430,3 +433,47 @@ class TournamentController:
 
         tournament = tournaments[int(choice) - 1]
         self.create_next_round(tournament)
+    def show_final_ranking(self):
+        tournaments = self.load_tournaments()
+        if not tournaments:
+            print("Aucun tournoi disponible.")
+            return
+
+        print("\n=== Sélectionner un tournoi ===")
+        for idx, t in enumerate(tournaments, 1):
+            print(f"{idx}. {t.name} ({t.date})")
+
+        choice = input("Entrez le numéro du tournoi : ")
+        if not choice.isdigit() or not (1 <= int(choice) <= len(tournaments)):
+            print("Choix invalide.")
+            return
+
+        tournament = tournaments[int(choice) - 1]
+
+        # Calcul des scores
+        scores = {pid: 0.0 for pid in tournament.players}
+        for round_data in tournament.rounds_list:
+            for match in round_data["matchs"]:
+                pid1, score1 = match[0]
+                pid2, score2 = match[1]
+                scores[pid1] += score1
+                scores[pid2] += score2
+
+        # Récupération des infos des joueurs
+        try:
+            with open("data_base/players.json", "r", encoding="utf-8") as f:
+                all_players = json.load(f)
+        except (FileNotFoundError, json.JSONDecodeError):
+            print("Impossible de charger les joueurs.")
+            return
+
+        players_dict = {p["national_id"]: p for p in all_players}
+
+        # Tri du classement
+        sorted_scores = sorted(scores.items(), key=lambda x: x[1], reverse=True)
+
+        print(f"\n=== Classement final du tournoi {tournament.name} ===")
+        for rank, (pid, score) in enumerate(sorted_scores, start=1):
+            player = players_dict.get(pid, {})
+            name = f"{player.get('first_name', 'Inconnu')} {player.get('last_name', '')}"
+            print(f"{rank}. {name} - {score} points")

@@ -8,7 +8,7 @@ data_file.touch(exist_ok=True)
 
 
 class Tournament:
-    def __init__(self, name, location, date, matchs=4, time_control="Blitz", description="", players=None, matchs_list=None):
+    def __init__(self, name, location, date, matchs=4, time_control="Blitz", description="", players=None, rounds_list=None):
         self.name = name
         self.location = location
         self.date = date
@@ -16,8 +16,7 @@ class Tournament:
         self.time_control = time_control
         self.description = description
         self.players = players if players else []
-        self.matchs_list = matchs_list if matchs_list else []
-
+        self.rounds_list = rounds_list if rounds_list else []
     def to_dict(self):
         return {
             "name": self.name,
@@ -27,7 +26,7 @@ class Tournament:
             "time_control": self.time_control,
             "description": self.description,
             "players": self.players,
-            "matchs_list": self.matchs_list
+            "rounds_list": self.rounds_list
         }
 
     @staticmethod

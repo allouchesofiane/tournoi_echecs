@@ -26,7 +26,7 @@ class TournamentController:
             elif choice == "2":
                 self.list_tournaments()
             elif choice == "3":
-                self.create_first_round()
+                self.start_first_round_menu()
             elif choice == "4":
                 break
             else:
@@ -57,6 +57,7 @@ class TournamentController:
             json.dump(tournaments, f, indent=4, ensure_ascii=False)
 
     def create_tournament(self):
+
         print("\n=== Création d'un nouveau tournoi ===")
         name = input("Nom du tournoi : ")
         location = input("Lieu : ")
@@ -175,6 +176,7 @@ class TournamentController:
 
         with open(DATABASE_PATH, "w", encoding="utf-8") as f:
             json.dump(updated, f, indent=4, ensure_ascii=False)
+
     def start_first_round_menu(self):
         tournaments = self.load_tournaments()
         if not tournaments:
@@ -191,10 +193,7 @@ class TournamentController:
             return
 
         tournament = tournaments[int(choice) - 1]
-
         # Créer un tour
-        from datetime import datetime
-        from models.tournament import Tour, Match
 
         print("\n--- Démarrage du premier tour ---")
 

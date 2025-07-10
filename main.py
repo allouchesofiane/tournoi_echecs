@@ -1,9 +1,12 @@
-
-from controllers.player_controller import save_players, load_players
+import json
+import os
+from controllers.player_controller import load_players, save_players
 from controllers.tournament_controller import TournamentController
 from models.players import Player
 from views.view_main import PlayerView
 
+DATA_FILE = "data_base/players.json"
+os.makedirs("data_base", exist_ok=True)
 
 def main():
     player_view = PlayerView()
@@ -16,6 +19,7 @@ def main():
         print("2. Afficher les joueurs")
         print("3. Gérer les tournois")
         print("4. Quitter")
+
         choice = input("Votre choix : ")
 
         if choice == "1":
@@ -29,7 +33,7 @@ def main():
             player_view.show_all_players(players)
 
         elif choice == "3":
-            tournament_controller.create_tournament()
+            tournament_controller()  # appel du __call__ de TournamentController
 
         elif choice == "4":
             print("Au revoir !")
@@ -37,7 +41,6 @@ def main():
 
         else:
             print("Choix invalide. Veuillez entrer 1, 2, 3 ou 4.")
-
 
 if __name__ == "__main__":
     main()

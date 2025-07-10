@@ -7,7 +7,14 @@
         "time_control": "Blitz",
         "description": "un tournoi pour les debutants",
         "players": [],
-        "matchs_list": []
+        "rounds_list": [
+            {
+                "name": "Tour 1",
+                "matchs": [],
+                "start_time": "2025-07-10T12:29:23.939846",
+                "end_time": "2025-07-10T12:29:23.940126"
+            }
+        ]
     },
     {
         "name": "intermidiare",
@@ -17,7 +24,7 @@
         "time_control": "Coup rapide",
         "description": "un tournoi pour les intermidiaire",
         "players": [],
-        "matchs_list": []
+        "rounds_list": []
     },
     {
         "name": "pro",
@@ -27,7 +34,7 @@
         "time_control": "Bullet",
         "description": "un tournoi pour les pro",
         "players": [],
-        "matchs_list": []
+        "rounds_list": []
     },
     {
         "name": "amateur",
@@ -37,7 +44,7 @@
         "time_control": "Blitz",
         "description": "un tournoi pour les amateurs",
         "players": [],
-        "matchs_list": []
+        "rounds_list": []
     },
     {
         "name": "semi pro",
@@ -47,7 +54,7 @@
         "time_control": "Blitz",
         "description": "un tournoi pour les semi pro",
         "players": [],
-        "matchs_list": []
+        "rounds_list": []
     },
     {
         "name": "encore pro",
@@ -57,7 +64,7 @@
         "time_control": "Blitz",
         "description": "encore un tournoi pour les pros",
         "players": [],
-        "matchs_list": []
+        "rounds_list": []
     },
     {
         "name": "prmier tournoi",
@@ -67,7 +74,7 @@
         "time_control": "Blitz",
         "description": "un tournoi le premier ",
         "players": [],
-        "matchs_list": []
+        "rounds_list": []
     },
     {
         "name": "tournoi national",
@@ -77,7 +84,7 @@
         "time_control": "Blitz",
         "description": "un tournoi national",
         "players": [],
-        "matchs_list": []
+        "rounds_list": []
     },
     {
         "name": "tournoi benjamin",
@@ -87,7 +94,7 @@
         "time_control": "Bullet",
         "description": "un tournoi pour les benjamins ",
         "players": [],
-        "matchs_list": []
+        "rounds_list": []
     },
     {
         "name": "tournoi base",
@@ -104,6 +111,55 @@
             "fr54254",
             "fr15487"
         ],
-        "matchs_list": []
+        "rounds_list": []
+    },
+    {
+        "name": "tournoi seniors",
+        "location": "marseille",
+        "date": "17/09/2026",
+        "matchs": 6,
+        "time_control": "Bullet",
+        "description": "un tournoi pour les seniors ",
+        "players": [
+            "re52145",
+            "de25415",
+            "sd15847",
+            "he12345",
+            "fr54254",
+            "fr15487"
+        ],
+        "rounds_list": []
+    },
+    {
+        "name": "tournoi jeunes",
+        "location": "bezier",
+        "date": "09/08/2026",
+        "matchs": 6,
+        "time_control": "Blitz",
+        "description": "un tournoi pour les jeunes ",
+        "players": [
+            "re52145",
+            "de25415",
+            "sd15847",
+            "he12345",
+            "fr54254",
+            "fr15487"
+        ],
+        "rounds_list": []
+    },
+    {
+        "name": "tornoi journee",
+        "location": "cormeilles en parisis",
+        "date": "29/12/2026",
+        "matchs": 4,
+        "time_control": "Blitz",
+        "description": "un tournoi pour la journee",
+        "players": [
+            "re52145",
+            "de25415",
+            "sd15847",
+            "he12345"
+        ],
+        "rounds_list": []
     }
 ]

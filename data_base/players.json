@@ -76,5 +76,17 @@
         "first_name": "mechel",
         "date_of_birth": "05/08/2011",
         "national_id": "fr25147"
+    },
+    {
+        "last_name": "dubois",
+        "first_name": "samuel",
+        "date_of_birth": "05/08/1964",
+        "national_id": "te02142"
+    },
+    {
+        "last_name": "casi",
+        "first_name": "milann",
+        "date_of_birth": "02/06/1999",
+        "national_id": "de15427"
     }
 ]

@@ -18,7 +18,9 @@ class TournamentController:
             print("1. Créer un nouveau tournoi")
             print("2. Afficher les tournois existants")
             print("3. Créer le 1er tour d’un tournoi")
-            print("4. Retour au menu principal")
+            print("4. Afficher les tours et matchs d’un tournoi") 
+            print("5. Retour au menu principal")
+
             choice = input("Votre choix : ")
 
             if choice == "1":
@@ -28,9 +30,11 @@ class TournamentController:
             elif choice == "3":
                 self.start_first_round_menu()
             elif choice == "4":
+                self.show_rounds_and_matches()  # 👈 appel à la méthode d'affichage
+            elif choice == "5":
                 break
             else:
-                print("Choix invalide. Veuillez entrer 1, 2, 3 ou 4.")
+                print("Choix invalide. Veuillez entrer un nombre entre 1 et 5.")
 
 
     def load_tournaments(self):
@@ -256,17 +260,27 @@ class TournamentController:
             return
 
         tournament = tournaments[int(choice) - 1]
-        if not tournament.rounds_list:
+    
+        if not tournament.rounds_list:  # ou tournament.rounds_list selon ta version
             print("Aucun tour n’a été enregistré pour ce tournoi.")
             return
 
         print(f"\n=== Tours du tournoi {tournament.name} ===")
-        for round_data in tournament.rounds_list:
+        for round_data in tournament.rounds_list:  # ou .rounds_list
             print(f"\n{round_data['name']} - Début : {round_data['start_time']} | Fin : {round_data['end_time'] or 'en cours'}")
+        
+            if not round_data.get("matchs"):  # sécurité
+                print("  Aucun match trouvé.")
+                continue
+
             for match in round_data["matchs"]:
-                p1, s1 = match[0]
-                p2, s2 = match[1]
-                print(f"  ➤ {p1} ({s1}) vs {p2} ({s2})")
+                try:
+                    p1, s1 = match[0]
+                    p2, s2 = match[1]
+                    print(f"  ➤ {p1} ({s1}) vs {p2} ({s2})")
+                except Exception as e:
+                    print(f"  ⚠ Erreur lors de l'affichage du match : {e}")
+
 
     def create_first_round(self, tournament):
         """Créer automatiquement le premier tour du tournoi"""

@@ -17,6 +17,7 @@ class Tournament:
         self.description = description
         self.players = players if players else []
         self.rounds_list = rounds_list if rounds_list else []
+
     def to_dict(self):
         return {
             "name": self.name,
@@ -87,7 +88,7 @@ class Tour:
     def to_dict(self):
         return {
             "name": self.name,
-            "matchs": [r.to_tuple() for r in self.matchs],
+            "matchs": [match.to_tuple() for match in self.matchs],
             "start_time": self.start_time,
             "end_time": self.end_time,
         }

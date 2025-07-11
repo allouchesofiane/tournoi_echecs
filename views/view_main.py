@@ -49,6 +49,7 @@ class DateView:
         print(f"Fin : {end}")
         return begin, end
 
+
 class PlayerView:
 
     def get_player_info(self):
@@ -71,17 +72,18 @@ class PlayerView:
     def show_all_players(self, players):
         print("\n=== Liste des joueurs enregistrés ===")
         for player in players:
-            print(f"- {player.first_name} {player.last_name} | Né(e) le {player.date_of_birth} | ID : {player.national_id}")
-        
+            print(f"- {player.first_name} {player.last_name} |"
+                  f" Né(e) le {player.date_of_birth} | ID : {player.national_id}")
+
 
 class DisplayTournamentView:
-    
+
     def get_tournament_info(self):
         print("\n=== Création d'un nouveau tournoi ===")
         name = input("Nom du tournoi : ")
         location = input("Lieu : ")
         date = input("Date (jj/mm/aaaa) : ")
-        
+
         matchs = input("Nombre de matchs (défaut 4) : ")
         matchs = int(matchs) if matchs.isdigit() else 4
 
@@ -129,4 +131,3 @@ class DisplayTournamentView:
                 time_control = tournament.time_control
 
             print(f"{idx}. {name} - {location} - {date} - {time_control}")
-

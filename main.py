@@ -1,4 +1,3 @@
-
 import os
 from controllers.player_controller import load_players, save_players
 from controllers.tournament_controller import TournamentController
@@ -7,6 +6,7 @@ from views.view_main import PlayerView
 
 DATA_FILE = "data_base/players.json"
 os.makedirs("data_base", exist_ok=True)
+
 
 def main():
     player_view = PlayerView()
@@ -41,6 +41,7 @@ def main():
 
         else:
             print("Choix invalide. Veuillez entrer 1, 2, 3 ou 4.")
+
 
 if __name__ == "__main__":
     main()

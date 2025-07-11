@@ -15,5 +15,3 @@ class Player:
 
     def __str__(self):
         return f"{self.last_name} {self.first_name} ({self.date_of_birth}) - ID: {self.national_id}"
-
-

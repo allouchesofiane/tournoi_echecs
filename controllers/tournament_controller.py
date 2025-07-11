@@ -1,7 +1,7 @@
 import json
 import os
 import random
-from models.tournament import Tournament, Match, Tour 
+from models.tournament import Tournament, Match, Tour
 from views.view_main import DisplayTournamentView
 from models.players import Player
 
@@ -18,9 +18,9 @@ class TournamentController:
             print("1. Créer un nouveau tournoi")
             print("2. Afficher les tournois existants")
             print("3. Créer le 1er tour d’un tournoi")
-            print("4. Afficher les tours et matchs d’un tournoi") 
+            print("4. Afficher les tours et matchs d’un tournoi")
             print("5. Créer le tour suivant d’un tournoi")
-            print("6. Afficher le classement final d’un tournoi")  
+            print("6. Afficher le classement final d’un tournoi")
             print("7. Retour au menu principal")
 
             choice = input("Votre choix : ")
@@ -33,15 +33,14 @@ class TournamentController:
                 self.start_first_round_menu()
             elif choice == "4":
                 self.show_rounds_and_matches()
-            elif choice == "5": 
+            elif choice == "5":
                 self.create_next_round_menu()
             elif choice == "6":
-                self.show_final_ranking() 
+                self.show_final_ranking()
             elif choice == "7":
                 break
             else:
                 print("Choix invalide. Veuillez entrer un nombre entre 1 et 6.")
-
 
     def load_tournaments(self):
         if not os.path.exists(DATABASE_PATH):
@@ -54,18 +53,6 @@ class TournamentController:
         except json.JSONDecodeError:
             return []
 
-    def save_tournament(self, tournament_data):
-        try:
-            with open(DATABASE_PATH, "r", encoding="utf-8") as f:
-                tournaments = json.load(f)
-        except (FileNotFoundError, json.JSONDecodeError):
-            tournaments = []
-
-        tournaments.append(tournament_data)
-
-        with open(DATABASE_PATH, "w", encoding="utf-8") as f:
-            json.dump(tournaments, f, indent=4, ensure_ascii=False)
-
     def create_tournament(self):
 
         print("\n=== Création d'un nouveau tournoi ===")
@@ -73,7 +60,7 @@ class TournamentController:
         location = input("Lieu : ")
         date = input("Date : ")
         matchs = input("Nombre de tours (défaut 4) : ") or 4
-        time_control = input("Contrôle du temps (Blitz / Bullet / Coup rapide) : ") or "Blitz"
+        time_control = input("Contrôle du temps(Blitz/ Bullet/ Coup rapide) : ") or "Blitz"
         description = input("Description : ")
 
     # Charger les joueurs disponibles
@@ -119,8 +106,6 @@ class TournamentController:
         self.save_tournament(new_tournament.to_dict())
         print("\n Tournoi ajouté avec succès avec les joueurs sélectionnés.")
 
-
-
     def list_tournaments(self):
         tournaments = self.load_tournaments()
         self.view.show_all_tournaments(tournaments)
@@ -156,7 +141,7 @@ class TournamentController:
                 matches.append(match)
 
         # Création du tour
-        round_name = f"Tour 1"
+        round_name = "Tour 1"
         first_round = Tour(name=round_name)
         for match in matches:
             first_round.add_match(match)
@@ -264,7 +249,6 @@ class TournamentController:
             return
 
         tournament = tournaments[int(choice) - 1]
-        self.create_next_round(tournament)
 
         if not tournament.rounds_list:  # ou tournament.rounds_list selon ta version
             print("Aucun tour n’a été enregistré pour ce tournoi.")
@@ -272,10 +256,13 @@ class TournamentController:
 
         print(f"\n=== Tours du tournoi {tournament.name} ===")
         for round_data in tournament.rounds_list:  # ou .rounds_list
-            print(f"\n{round_data['name']} - Début : {round_data['start_time']} | Fin : {round_data['end_time'] or 'en cours'}")
-        
-            if not round_data.get("matchs"):  # sécurité
-                print("  Aucun match trouvé.")
+            print(
+                f"\n{round_data['name']} - Début : {round_data['start_time']} | "
+                f"Fin : {round_data['end_time'] or 'en cours'}"
+            )
+
+            if not round_data.get("matchs"):
+                print("Aucun match trouvé.")
                 continue
 
             for match in round_data["matchs"]:
@@ -285,7 +272,6 @@ class TournamentController:
                     print(f"  ➤ {p1} ({s1}) vs {p2} ({s2})")
                 except Exception as e:
                     print(f"  ⚠ Erreur lors de l'affichage du match : {e}")
-
 
     def create_first_round(self, tournament):
         """Créer automatiquement le premier tour du tournoi"""
@@ -337,19 +323,9 @@ class TournamentController:
         with open(DATABASE_PATH, "w", encoding="utf-8") as f:
             json.dump(tournaments, f, indent=4, ensure_ascii=False)
 
-
     def create_next_round(self, tournament: Tournament):
         """Crée le prochain tour en fonction des scores précédents et en évitant les re-matches."""
         print("\n=== Création du tour suivant ===")
-
-        # Charger tous les joueurs depuis le fichier JSON
-        try:
-            with open("data_base/players.json", "r", encoding="utf-8") as f:
-                all_players_data = json.load(f)
-                all_players = [Player(**p) for p in all_players_data]
-        except (FileNotFoundError, json.JSONDecodeError):
-            print("Erreur de chargement des joueurs.")
-            return
 
         # Récupérer les joueurs du tournoi avec leurs scores
         player_scores = {player_id: 0.0 for player_id in tournament.players}
@@ -375,8 +351,9 @@ class TournamentController:
         while i < len(player_ids_sorted):
             p1 = player_ids_sorted[i]
             if p1 in used_players:
-                    i += 1
-                    continue
+                i += 1
+                continue
+
             for j in range(i+1, len(player_ids_sorted)):
                 p2 = player_ids_sorted[j]
                 if p2 not in used_players and frozenset([p1, p2]) not in previous_matches:
@@ -413,8 +390,7 @@ class TournamentController:
         tournament.rounds_list.append(new_round.to_dict())
         self.update_tournament(tournament)
 
-        print(f"\n✅ {new_round.name} terminé et enregistré.")
-
+        print(f"\n{new_round.name} terminé et enregistré.")
 
     def create_next_round_menu(self):
         tournaments = self.load_tournaments()
@@ -433,6 +409,7 @@ class TournamentController:
 
         tournament = tournaments[int(choice) - 1]
         self.create_next_round(tournament)
+
     def show_final_ranking(self):
         tournaments = self.load_tournaments()
         if not tournaments:

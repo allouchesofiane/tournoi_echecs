@@ -8,7 +8,9 @@ data_file.touch(exist_ok=True)
 
 
 class Tournament:
-    def __init__(self, name, location, date, matchs=4, time_control="Blitz", description="", players=None, rounds_list=None):
+
+    def __init__(self, name, location, date, matchs=4, time_control="Blitz",
+                 description="", players=None, rounds_list=None):
         self.name = name
         self.location = location
         self.date = date

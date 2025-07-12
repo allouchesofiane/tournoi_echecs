@@ -3,7 +3,7 @@
         "name": "debutant",
         "location": "clamart",
         "date": "08/07/2025",
-        "matchs": 4,
+        "rounds": 4,
         "time_control": "Blitz",
         "description": "un tournoi pour les debutants",
         "players": [],
@@ -32,7 +32,7 @@
         "name": "intermidiare",
         "location": "antony",
         "date": "07/07/2025",
-        "matchs": 6,
+        "rounds": 6,
         "time_control": "Coup rapide",
         "description": "un tournoi pour les intermidiaire",
         "players": [],
@@ -49,7 +49,7 @@
         "name": "amateur",
         "location": "paris",
         "date": "06/08/2025",
-        "matchs": 8,
+        "rounds": 8,
         "time_control": "Blitz",
         "description": "un tournoi pour les amateurs",
         "players": [],
@@ -59,7 +59,7 @@
         "name": "semi pro",
         "location": "boulogne",
         "date": "05/09/2025",
-        "matchs": 8,
+        "rounds": 8,
         "time_control": "Blitz",
         "description": "un tournoi pour les semi pro",
         "players": [],
@@ -69,7 +69,7 @@
         "name": "encore pro",
         "location": "lens",
         "date": "04/08/2025",
-        "matchs": 8,
+        "rounds": 8,
         "time_control": "Blitz",
         "description": "encore un tournoi pour les pros",
         "players": [],
@@ -79,7 +79,7 @@
         "name": "prmier tournoi",
         "location": "saint tropez ",
         "date": "02/06/2025",
-        "matchs": 6,
+        "rounds": 6,
         "time_control": "Blitz",
         "description": "un tournoi le premier ",
         "players": [],
@@ -89,7 +89,7 @@
         "name": "tournoi national",
         "location": "france",
         "date": "05/04/2025",
-        "matchs": 6,
+        "rounds": 6,
         "time_control": "Blitz",
         "description": "un tournoi national",
         "players": [],
@@ -99,7 +99,7 @@
         "name": "tournoi benjamin",
         "location": "versaille",
         "date": "05/05/2025",
-        "matchs": 6,
+        "rounds": 6,
         "time_control": "Bullet",
         "description": "un tournoi pour les benjamins ",
         "players": [],
@@ -109,7 +109,7 @@
         "name": "tournoi base",
         "location": "bresil",
         "date": "02/11/2025",
-        "matchs": 6,
+        "rounds": 6,
         "time_control": "Bullet",
         "description": "un tournoi de base pour les debutant",
         "players": [
@@ -292,7 +292,7 @@
         "name": "tournoi seniors",
         "location": "marseille",
         "date": "17/09/2026",
-        "matchs": 6,
+        "rounds": 6,
         "time_control": "Bullet",
         "description": "un tournoi pour les seniors ",
         "players": [
@@ -458,7 +458,7 @@
         "name": "tournoi jeunes",
         "location": "bezier",
         "date": "09/08/2026",
-        "matchs": 6,
+        "rounds": 6,
         "time_control": "Blitz",
         "description": "un tournoi pour les jeunes ",
         "players": [
@@ -587,7 +587,7 @@
         "name": "tornoi journee",
         "location": "cormeilles en parisis",
         "date": "29/12/2026",
-        "matchs": 4,
+        "rounds": 4,
         "time_control": "Blitz",
         "description": "un tournoi pour la journee",
         "players": [
@@ -602,7 +602,7 @@
         "name": "tournoi regional",
         "location": "toulouse",
         "date": "01/01/2026",
-        "matchs": 6,
+        "rounds": 6,
         "time_control": "Blitz",
         "description": "un tournoi regional",
         "players": [
@@ -694,7 +694,7 @@
         "name": "tournoi junior",
         "location": "chatillon",
         "date": "03/11/2026",
-        "matchs": 3,
+        "rounds": 3,
         "time_control": "Bullet",
         "description": "un tournoi pour les junior ",
         "players": [
@@ -708,7 +708,7 @@
         "name": "semi amateur",
         "location": "nice",
         "date": "29/10/2025",
-        "matchs": 4,
+        "rounds": 4,
         "time_control": "Blitz",
         "description": "un tournoi pour semi amateur ",
         "players": [
@@ -911,7 +911,7 @@
         "name": "pro",
         "location": "villeneuve",
         "date": "05/05/2029",
-        "matchs": 4,
+        "rounds": 4,
         "time_control": "Blitz",
         "description": "professionnel",
         "players": [
@@ -1077,7 +1077,7 @@
         "name": "grand tournoi",
         "location": "saint tropez",
         "date": "22/08/2026",
-        "matchs": 4,
+        "rounds": 4,
         "time_control": "Blitz",
         "description": "un tournoi qui rassemble plusieurs gategories",
         "players": [
@@ -1236,6 +1236,221 @@
                 ],
                 "start_time": "2025-07-11T13:22:35.367842",
                 "end_time": "2025-07-11T13:22:44.615611"
+            }
+        ]
+    },
+    {
+        "name": "tournoi binome",
+        "location": "centre de la france ",
+        "date": "05/12/2029",
+        "rounds": 4,
+        "time_control": "Blitz",
+        "description": "un tournoi pour le centre de la france ",
+        "players": [
+            "fr15487",
+            "sd15847",
+            "he12345",
+            "re52145",
+            "de25415",
+            "fr54254"
+        ],
+        "rounds_list": [
+            {
+                "name": "Tour 1",
+                "matchs": [
+                    [
+                        [
+                            "fr15487",
+                            1.0
+                        ],
+                        [
+                            "sd15847",
+                            0.0
+                        ]
+                    ],
+                    [
+                        [
+                            "he12345",
+                            1.0
+                        ],
+                        [
+                            "re52145",
+                            0.0
+                        ]
+                    ],
+                    [
+                        [
+                            "de25415",
+                            0.5
+                        ],
+                        [
+                            "fr54254",
+                            0.5
+                        ]
+                    ]
+                ],
+                "start_time": "2025-07-12T18:26:13.690669",
+                "end_time": "2025-07-12T18:26:25.402135"
+            },
+            {
+                "name": "Tour 2",
+                "matchs": [
+                    [
+                        [
+                            "fr15487",
+                            1.0
+                        ],
+                        [
+                            "he12345",
+                            0.0
+                        ]
+                    ],
+                    [
+                        [
+                            "de25415",
+                            1.0
+                        ],
+                        [
+                            "sd15847",
+                            0.0
+                        ]
+                    ],
+                    [
+                        [
+                            "fr54254",
+                            0.5
+                        ],
+                        [
+                            "re52145",
+                            0.5
+                        ]
+                    ]
+                ],
+                "start_time": "2025-07-12T18:26:43.947646",
+                "end_time": "2025-07-12T18:26:51.823967"
+            },
+            {
+                "name": "Tour 3",
+                "matchs": [
+                    [
+                        [
+                            "fr15487",
+                            1.0
+                        ],
+                        [
+                            "de25415",
+                            0.0
+                        ]
+                    ],
+                    [
+                        [
+                            "he12345",
+                            1.0
+                        ],
+                        [
+                            "fr54254",
+                            0.0
+                        ]
+                    ],
+                    [
+                        [
+                            "re52145",
+                            0.5
+                        ],
+                        [
+                            "sd15847",
+                            0.5
+                        ]
+                    ]
+                ],
+                "start_time": "2025-07-12T18:27:01.164274",
+                "end_time": "2025-07-12T18:27:10.506525"
+            },
+            {
+                "name": "Tour 4",
+                "matchs": [
+                    [
+                        [
+                            "fr15487",
+                            1.0
+                        ],
+                        [
+                            "re52145",
+                            0.0
+                        ]
+                    ],
+                    [
+                        [
+                            "he12345",
+                            1.0
+                        ],
+                        [
+                            "de25415",
+                            0.0
+                        ]
+                    ],
+                    [
+                        [
+                            "fr54254",
+                            1.0
+                        ],
+                        [
+                            "sd15847",
+                            0.0
+                        ]
+                    ]
+                ],
+                "start_time": "2025-07-12T18:27:18.247358",
+                "end_time": "2025-07-12T18:27:26.731403"
+            },
+            {
+                "name": "Tour 5",
+                "matchs": [
+                    [
+                        [
+                            "fr15487",
+                            1.0
+                        ],
+                        [
+                            "fr54254",
+                            0.0
+                        ]
+                    ],
+                    [
+                        [
+                            "he12345",
+                            1.0
+                        ],
+                        [
+                            "sd15847",
+                            0.0
+                        ]
+                    ],
+                    [
+                        [
+                            "de25415",
+                            1.0
+                        ],
+                        [
+                            "re52145",
+                            0.0
+                        ]
+                    ]
+                ],
+                "start_time": "2025-07-12T18:27:37.318369",
+                "end_time": "2025-07-12T18:28:33.520239"
+            },
+            {
+                "name": "Tour 6",
+                "matchs": [],
+                "start_time": "2025-07-12T18:28:41.895260",
+                "end_time": "2025-07-12T18:28:41.895517"
+            },
+            {
+                "name": "Tour 7",
+                "matchs": [],
+                "start_time": "2025-07-12T18:29:03.033645",
+                "end_time": "2025-07-12T18:29:03.033969"
             }
         ]
     }

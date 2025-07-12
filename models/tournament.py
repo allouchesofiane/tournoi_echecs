@@ -8,24 +8,27 @@ data_file.touch(exist_ok=True)
 
 
 class Tournament:
-
-    def __init__(self, name, location, date, matchs=4, time_control="Blitz",
+    """
+    Représente un tournoi d’échecs avec ses paramètres et son état.
+    """
+    def __init__(self, name, location, date, rounds=4, time_control="Blitz",
                  description="", players=None, rounds_list=None):
         self.name = name
         self.location = location
         self.date = date
-        self.matchs = matchs
+        self.rounds = rounds
         self.time_control = time_control
         self.description = description
         self.players = players if players else []
         self.rounds_list = rounds_list if rounds_list else []
 
     def to_dict(self):
+        # Convertit l'objet joueur en dictionnaire
         return {
             "name": self.name,
             "location": self.location,
             "date": self.date,
-            "matchs": self.matchs,
+            "rounds": self.rounds,
             "time_control": self.time_control,
             "description": self.description,
             "players": self.players,

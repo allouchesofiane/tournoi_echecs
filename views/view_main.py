@@ -84,8 +84,8 @@ class DisplayTournamentView:
         location = input("Lieu : ")
         date = input("Date (jj/mm/aaaa) : ")
 
-        matchs = input("Nombre de matchs (défaut 4) : ")
-        matchs = int(matchs) if matchs.isdigit() else 4
+        rounds = input("Nombre de rounds (défaut 4) : ")
+        rounds = int(rounds) if rounds.isdigit() else 4
 
         print("Contrôle du temps :")
         print("1. Bullet")
@@ -104,7 +104,7 @@ class DisplayTournamentView:
             "name": name,
             "location": location,
             "date": date,
-            "matchs": matchs,
+            "rounds": rounds,
             "time_control": time_control,
             "description": description
         }

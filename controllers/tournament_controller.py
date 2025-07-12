@@ -59,7 +59,7 @@ class TournamentController:
         name = input("Nom du tournoi : ")
         location = input("Lieu : ")
         date = input("Date : ")
-        matchs = input("Nombre de tours (défaut 4) : ") or 4
+        rounds = input("Nombre de tours (défaut 4) : ") or 4
         time_control = input("Contrôle du temps(Blitz/ Bullet/ Coup rapide) : ") or "Blitz"
         description = input("Description : ")
 
@@ -97,7 +97,7 @@ class TournamentController:
             name=name,
             location=location,
             date=date,
-            matchs=int(matchs),
+            rounds=int(rounds),
             time_control=time_control,
             description=description,
             players=player_ids
@@ -134,16 +134,16 @@ class TournamentController:
         random.shuffle(player_objs)
 
         # Création des matchs
-        matches = []
+        matchs = []
         for i in range(0, len(player_objs), 2):
             if i + 1 < len(player_objs):
                 match = Match(player_objs[i].national_id, player_objs[i+1].national_id)
-                matches.append(match)
+                matchs.append(match)
 
         # Création du tour
         round_name = "Tour 1"
         first_round = Tour(name=round_name)
-        for match in matches:
+        for match in matchs:
             first_round.add_match(match)
 
         # Ajout du tour au tournoi
@@ -152,7 +152,7 @@ class TournamentController:
         # Sauvegarde dans le fichier JSON
         self.update_tournament(tournament)
 
-        print(f"\n{round_name} démarré avec {len(matches)} matchs.")
+        print(f"\n{round_name} démarré avec {len(matchs)} matchs.")
 
     def update_tournament(self, tournament):
         """Remplace le tournoi existant par sa version mise à jour dans le fichier JSON"""

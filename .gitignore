@@ -1,6 +1,12 @@
 
 # === Fichiers de config de l'éditeur (VSCode) ===
 .vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
 # Fichiers Python compilés
 __pycache__/
 *.py[cod]
@@ -11,5 +17,7 @@ venv/
 env/
 ENV/
 .venv/
-
+# Les données
+data/
+flake8_rapport/
 

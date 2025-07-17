@@ -1,32 +1,42 @@
+"""Contrôleur principal qui gère le menu principal de l'application."""
 
-from views.view_main import MainDisplay, ClearScreen, InputView, MessageView
+from views.main_view import MainView
+from controllers.player_controller import PlayerController
+from controllers.tournament_controller import TournamentController
+from controllers.report_controller import ReportController
 
 
 class MainController:
-    """Contrôleur principal qui gère le menu principal de l'application."""
+    """Contrôleur principal qui orchestre l'application."""
 
     def __init__(self):
-        self.display = MainDisplay()
-        self.clear = ClearScreen()
-        self.input_view = InputView()
-        self.message = MessageView()
+        """Initialise le contrôleur principal et ses dépendances."""
+        self.view = MainView()
+        self.player_controller = PlayerController()
+        self.tournament_controller = TournamentController()
+        self.report_controller = ReportController()
 
-    def __call__(self):
+    def run(self):
+        """Lance la boucle principale de l'application."""
+        # Affichage du message de bienvenue
+        self.view.display_welcome()
+        # Boucle principale
         while True:
-            self.clear()  # Nettoie l'écran à chaque boucle
-            self.display.display_title()  # Affiche le menu principal
-
-            choice = self.input_view.get_input("Votre choix")
-
-            if choice == "1":
-                self.message.show_message("→ Accès au menu joueur")
-                input("Appuyez sur Entrée pour revenir au menu.")
-            elif choice == "2":
-                self.message.show_message("→ Accès au menu tournoi")
-                input("Appuyez sur Entrée pour revenir au menu.")
-            elif choice == "3":
-                self.message.show_message("→ À bientôt")
+            self.view.display_main_menu()
+            choice = int(input("Votre choix : "))
+            if choice == 1:
+                # Gestion des joueurs
+                self.player_controller.run()
+            elif choice == 2:
+                # Gestion des tournois
+                self.tournament_controller.run()
+            elif choice == 3:
+                # Rapports
+                self.report_controller.run()
+            elif choice == 4:
+                # Quitter
+                self.view.display_goodbye()
                 break
             else:
-                self.message.show_message("Choix invalide. Veuillez réessayer.")
-                input("Appuyez sur Entrée pour continuer.")
+                # Choix invalide
+                print("choix invalide")

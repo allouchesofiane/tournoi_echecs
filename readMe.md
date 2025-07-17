@@ -1,98 +1,198 @@
-# Gestionnaire de Tournoi d'Échecs
+# Gestionnaire de Tournois d'Échecs 
 
-Ce projet est une application en ligne de commande permettant de gérer des tournois d'échecs. Il a été développé dans le cadre d'un parcours de formation développeur Python.
+Application Python en ligne de commande pour gérer des tournois d'échecs. 
+Développée en suivant l'architecture MVC (Modèle-Vue-Contrôleur) et les principes de la programmation orientée objet.
 
-## 🔧 Fonctionnalités
+##  Table des matières
 
-- Ajout et affichage de joueurs avec persistance en JSON
-- Création de tournois avec :
-  - nom, lieu, date, nombre de tours, description, type de cadence
-  - sélection manuelle des joueurs
-- Gestion du 1er tour d’un tournoi :
-  - Génération aléatoire de paires
-  - Saisie des scores et sauvegarde du round
-- Création automatique des tours suivants :
-  - Tri des joueurs par scores
-  - Exclusion des paires déjà jouées
-- Affichage de tous les rounds et des matchs associés
-- Affichage du classement final d’un tournoi
-- Architecture MVC respectée
-- Conformité PEP8 avec rapport flake8-html
+- [Fonctionnalités](#-fonctionnalités)
+- [Architecture du projet](#-architecture-du-projet)
+- [Installation](#-installation)
+- [Utilisation](#-utilisation)
+- [Structure des données](#-structure-des-données)
+- [Développement](#-développement)
+- [Tests et qualité](#-tests-et-qualité)
 
-## 📂 Structure du projet
+##  Fonctionnalités
 
-tournoi_echecs/
+### Gestion des joueurs
+-  Ajout de nouveaux joueurs avec validation complète
+-  Affichage de tous les joueurs (tri alphabétique)
+-  Recherche de joueurs par nom, prénom ou ID
+-  Persistance des données en JSON
+
+### Gestion des tournois
+-  Création de tournois avec paramètres personnalisables
+-  Sélection des joueurs participants
+-  Génération automatique des appariements
+-  Évitement des matchs en double
+-  Gestion des tours successifs
+-  Calcul automatique des classements
+
+### Rapports détaillés
+-  Liste complète des joueurs
+-  Liste de tous les tournois
+-  Détails complets d'un tournoi
+-  Classement 
+
+##  Architecture du projet
+
+```
+TOURNOI_ECHECS/
 │
-├── controllers/
-│   └── player_controller.py
-│   └── tournament_controller.py
+├── main.py                      # Point d'entrée principal
+├── requirements.txt             # Dépendances Python
+├── .flake8                      # Configuration flake8
+├── .gitignore                  # Fichiers ignorés par Git
+├── README.md                   # Ce fichier
 │
-├── models/
-│   └── players.py
-│   └── tournament.py
+├── models/                     # Modèles 
+│   ├── __init__.py
+│   ├── player.py              # Modèle Joueur
+│   ├── tournament.py          # Modèle Tournoi
+│   ├── match.py               # Modèle Match
+│   └── round.py               # Modèle Tour
 │
-├── views/
-│   └── view_main.py
+├── views/                      # interface utilisateur
+│   ├── __init__.py
+│   ├── main_view.py           # Vue du menu principal
+│   ├── player_view.py         # Vue pour les joueurs
+│   ├── tournament_view.py     # Vue pour les tournois
+│   ├── round_view.py          # Vue pour les tours et matchs
+│   └── report_view.py         # Vue pour les rapports
 │
-├── data_base/
-│   └── players.json
-│   └── tournaments.json
+├── controllers/                # Contrôleur 
+│   ├── __init__.py
+│   ├── main_controller.py     # Contrôleur principal
+│   ├── player_controller.py   # Contrôleur des joueurs
+│   ├── tournament_controller.py # Contrôleur des tournois
+│   └── report_controller.py   # Contrôleur des rapports
 │
-├── flake8_rapport/  # Rapport HTML flake8
+├── utils/                      # Utilitaires et helpers
+│   ├── __init__.py
+│   └── db_manager.py          # Gestion des fichiers JSON
 │
-├── main.py
-├── requirements.txt
-└── README.md
-
-## 💾 Sauvegarde des données
-
-Les données sont enregistrées localement dans des fichiers `.json` :
-- `players.json` pour les joueurs
-- `tournaments.json` pour les tournois
-
-Aucune base de données externe n’est utilisée. L’application fonctionne hors ligne.
-
-## 🌟 Qualité du code
-
-- Respect du pattern MVC (Modèle - Vue - Contrôleur)
-- Code validé avec `flake8` et rapport généré avec `flake8-html`
-- Convention PEP8 respectée
-
-## 🔄 Installation de l'environnement virtuel
-
-1. Créer un environnement virtuel Python :
-```bash
-python -m venv env
+├── data/                       # Données persistantes
+│   ├── players.json           # Base de données des joueurs
+│   └── tournaments.json       # Base de données des tournois
+│
+└── flake8_rapport/            # Rapport de conformité PEP8
+    └── index.html
 ```
 
-2. Activer l'environnement :
-- Windows :
+## Installation
+
+### Prérequis
+- Python 3.13 ou supérieur
+- pip (gestionnaire de paquets Python)
+
+### Étapes d'installation
+
+1. **Cloner le repository**
 ```bash
-env\Scripts\activate
-```
-- macOS/Linux :
-```bash
-source env/bin/activate
+git clone https://github.com/allouchesofiane/tournoi_echecs.git
+cd tournoi_echecs
 ```
 
-3. Installer les dépendances :
+2. **Créer un environnement virtuel**
+```bash
+# Windows
+python -m venv venv
+venv\Scripts\activate
+
+3. **Installer les dépendances**
 ```bash
 pip install -r requirements.txt
 ```
 
-## 🚀 Lancer l'application
+## 💻 Utilisation
 
-Dans le terminal, à la racine du projet :
+### Lancer l'application
 ```bash
 python main.py
 ```
 
-## 🔢 Générer un rapport flake8-html
+### Navigation dans les menus
 
-Assurez-vous que `flake8` et `flake8-html` sont installés. Puis :
-```bash
-flake8 . --format=html --htmldir=flake8_rapport --max-line-length=119
+#### Menu principal
 ```
-Le rapport HTML sera créé dans le dossier `flake8_rapport/index.html`.
+1. Gestion des joueurs    → Ajouter, afficher, rechercher
+2. Gestion des tournois   → Créer, gérer les tours, classements
+3. Rapports              → Diverses vues
+4. Quitter               → Fermer l'application
+```
 
-**Important :** le rapport ne doit afficher aucune erreur pour valider la conformité au PEP8.
+#### Workflow typique d'un tournoi
+
+1. **Créer des joueurs** (minimum 2, idéalement nombre pair)
+2. **Créer un tournoi** et sélectionner les participants
+3. **Démarrer le premier tour** (appariement aléatoire)
+4. **Saisir les résultats** des matchs
+5. **Créer les tours suivants** (appariement par score)
+6. **Consulter le classement final**
+
+##  Structure des données
+
+### Format Player (joueur)
+```json
+{
+    "last_name": "dubois",
+    "first_name": "bertrand",
+    "date_of_birth": "03/03/2000",
+    "national_id": "VB12547"
+}
+```
+
+### Format Tournament (tournoi)
+```json
+{
+    "name": "tournoi pour les amateurs",
+    "location": "boulogne",
+    "date": "05/11/2026",
+    "rounds": 4,
+    "time_control": "Blitz",
+    "description": "un tournoi pour les amateurs",
+    "players": [
+        "DE12456",
+        "FR25418",
+        "GT12548",
+        "SZ14527",
+        "HY25413",
+        "VB12547"
+    ],
+    "rounds_list": []
+}
+```
+
+## Développement
+
+### Standards de code
+- **PEP 8** : Respect des conventions Python
+- **Ligne maximale** : 119 caractères
+- **Docstrings** : Pour toutes les classes et méthodes
+
+### Architecture MVC
+- **Modèles** : Aucune dépendance vers les vues
+- **Vues** : Aucune logique métier
+- **Contrôleurs** : Orchestration uniquement
+
+## Tests et qualité
+
+### Vérifier la conformité PEP8
+```bash
+# Générer le rapport HTML
+flake8 . --format=html --htmldir=flake8_rapport
+
+# Vérification dans le terminal
+flake8 .
+```
+
+## Notes importantes
+
+### Améliorations futures possibles
+- Interface graphique 
+- Base de données SQL
+
+## 📄 Licence
+
+Ce projet est développé dans le cadre d'une formation.

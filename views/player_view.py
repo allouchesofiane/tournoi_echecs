@@ -1,7 +1,7 @@
 """Vue pour la gestion des joueurs."""
 
 
-class PlayerView():
+class PlayerView:
     """Gère l'affichage relatif aux joueurs."""
 
     def display_player_menu(self):

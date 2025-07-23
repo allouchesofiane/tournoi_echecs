@@ -1,7 +1,7 @@
 """Vue pour le menu principal de l'application."""
 
 
-class MainView():
+class MainView:
     """Gère l'affichage du menu principal."""
 
     def display_welcome(self):

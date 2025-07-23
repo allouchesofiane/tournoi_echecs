@@ -9,7 +9,10 @@ class DatabaseManager:
     """Gestionnaire de base de données JSON."""
 
     def __init__(self):
-        """Initialise le gestionnaire de base de données."""
+        """initialise un objet DatabaseManager.
+            crée un objet Path (de pathlib) qui représente le dossier data.
+            On s'assurer que le dossier existe.
+    """
         self.data_dir = Path("data")
         self._ensure_data_directory()
 
@@ -22,15 +25,12 @@ class DatabaseManager:
         Sauvegarde des données dans un fichier JSON.
         """
         try:
-            # Création du répertoire parent si nécessaire
-            Path(filepath).parent.mkdir(parents=True, exist_ok=True)
-
             # Sauvegarde avec encodage UTF-8 et indentation
             with open(filepath, 'w', encoding='utf-8') as f:
                 json.dump(data, f, indent=4, ensure_ascii=False)
 
         except Exception as e:
-            raise IOError(f"Erreur lors de la sauvegarde dans {filepath}: {str(e)}")
+            print(f"Erreur lors de la sauvegarde : {e}")
 
     def load_data(self, filepath):
         """
@@ -47,5 +47,3 @@ class DatabaseManager:
         except json.JSONDecodeError:
             # Si le fichier est corrompu, on retourne une liste vide
             return []
-        except Exception as e:
-            raise IOError(f"Erreur lors de la lecture de {filepath}: {str(e)}")

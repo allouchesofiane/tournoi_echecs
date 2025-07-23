@@ -2,7 +2,7 @@
 from datetime import datetime
 
 
-class RoundView():
+class RoundView:
     """Gère l'affichage relatif aux tours et matchs."""
 
     def display_round_creation(self, round_name, matches):
@@ -17,7 +17,10 @@ class RoundView():
         print("-" * 40)
 
         for idx, match in enumerate(matches, 1):
-            print(f"Match {idx}: {match}")
+            if match.player_2 is None:
+                print(f"Match {idx}: {match.player_1} est exempté (1 point)")
+            else:
+                print(f"Match {idx}: {match.player_1} vs {match.player_2}")
 
     def display_current_standings(self, standings):
         """
@@ -36,6 +39,9 @@ class RoundView():
         """
         Demande le résultat d'un match.
         """
+        if match.player_2 is None:
+            print(f"{match.player_1} est exempté. Aucun score à saisir.")
+            return 1.0, 0.0
         print(f"\n{match}")
         print("\nRésultat du match:")
         print("1. Victoire de", match.player_1)
@@ -98,13 +104,16 @@ class RoundView():
 
                         # Déterminer le résultat
                         if s1 > s2:
-                            result = f"✓ Victoire de {p1}"
+                            result = f" Victoire de {p1}"
                         elif s2 > s1:
-                            result = f"✓ Victoire de {p2}"
+                            result = f" Victoire de {p2}"
                         else:
                             result = "= Match nul"
 
-                        print(f"• {p1} ({s1}) vs {p2} ({s2}) - {result}")
+                        if p2 == "EXEMPT":
+                            print(f"• {p1} est exempté (1 point)")
+                        else:
+                            print(f"• {p1} ({s1}) vs {p2} ({s2}) - {result}")
                     except Exception:
                         print("• Erreur d'affichage du match")
             else:

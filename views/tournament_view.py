@@ -1,7 +1,7 @@
 """Vue pour la gestion des tournois."""
 
 
-class TournamentView():
+class TournamentView:
     """Gère l'affichage relatif aux tournois."""
 
     def display_tournament_menu(self):
@@ -78,7 +78,8 @@ class TournamentView():
             print("Aucun tournoi enregistré.")
             return
         # En-tête du tableau
-        print(f"\n{'N°'} {'Nom'} {'Lieu'} {'Date'} {'Tours'} {'Joueurs'} {'Statut'}")
+        print("\n{:<3} {:<30} {:<15} {:<12} {:<7} {:<10} {:<10}".format(
+            "N°", "Nom", "Lieu", "Date", "Tours", "Joueurs", "Statut"))
         print("-" * 100)
 
         # Affichage des tournois
@@ -87,8 +88,15 @@ class TournamentView():
             nb_joueurs = len(tournament.players)
             statut = "Terminé" if tournament.is_finished() else f"{tours_joues}/{tournament.rounds}"
 
-            print(f"{idx} {tournament.name} {tournament.location} "
-                  f"{tournament.date} {tournament.rounds} {nb_joueurs} {statut}")
+            print("{:<3} {:<30} {:<15} {:<12} {:<7} {:<10} {:<10}".format(
+                idx,
+                tournament.name,
+                tournament.location,
+                tournament.date,
+                tournament.rounds,
+                nb_joueurs,
+                statut
+            ))
 
         print(f"\nTotal: {len(tournaments)} tournoi(s)")
 

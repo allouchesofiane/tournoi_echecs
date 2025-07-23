@@ -11,14 +11,13 @@ Développée en suivant l'architecture MVC (Modèle-Vue-Contrôleur) et les prin
 - [Utilisation](#-utilisation)
 - [Structure des données](#-structure-des-données)
 - [Développement](#-développement)
-- [Tests et qualité](#-tests-et-qualité)
 
 ##  Fonctionnalités
 
 ### Gestion des joueurs
--  Ajout de nouveaux joueurs avec validation complète
+-  Ajout de nouveaux joueurs
 -  Affichage de tous les joueurs (tri alphabétique)
--  Recherche de joueurs par nom, prénom ou ID
+-  Recherche de joueurs par ID
 -  Persistance des données en JSON
 
 ### Gestion des tournois
@@ -176,7 +175,7 @@ python main.py
 - **Vues** : Aucune logique métier
 - **Contrôleurs** : Orchestration uniquement
 
-## Tests et qualité
+## Qualité du code 
 
 ### Vérifier la conformité PEP8
 ```bash

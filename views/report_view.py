@@ -1,7 +1,7 @@
 """Vue pour l'affichage des rapports."""
 
 
-class ReportView():
+class ReportView:
     """Gère l'affichage des rapports."""
 
     def display_report_menu(self):
@@ -32,7 +32,6 @@ class ReportView():
         for idx, player in enumerate(sorted_players, 1):
             full_name = f"{player.last_name.upper()}, {player.first_name}"
             print(f"{idx} {full_name} {player.date_of_birth} {player.national_id}")
-        print("\nStatistiques:")
         print(f"- Total des joueurs: {len(players)}")
 
     def display_tournaments_report(self, tournaments):

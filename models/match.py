@@ -28,6 +28,8 @@ class Match:
         """
         Convertit l'objet Match en tuple pour la sérialisation JSON.
         """
+        if self.player_2 is None:
+            return ([self.player_1, self.score_1], ["EXEMPT", self.score_2])
         return ([self.player_1, self.score_1], [self.player_2, self.score_2])
 
     def get_winner(self):
@@ -46,6 +48,8 @@ class Match:
 
     def __str__(self):
         """Représentation textuelle du match."""
+        if self.player_2 is None:
+            return f"{self.player_1} est exempté (1 point)"
         if self.is_played():
             return f"{self.player_1} ({self.score_1}) vs {self.player_2} ({self.score_2})"
         return f"{self.player_1} vs {self.player_2}"

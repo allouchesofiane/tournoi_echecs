@@ -132,7 +132,11 @@ class TournamentController:
             if i + 1 < len(players_copy):
                 match = Match(players_copy[i], players_copy[i+1])
                 matches.append(match)
-
+            else:
+                # Joueur exempté
+                exempt_player = players_copy[i]
+                match = Match(exempt_player, None, 1.0, 0.0)
+                matches.append(match)
         # Création du tour
         round_obj = Round(name="Tour 1", matchs=matches)
 
@@ -178,7 +182,8 @@ class TournamentController:
             self.create_next_round(tournament)
 
     def create_next_round(self, tournament):
-        """Crée le prochain tour en évitant les matchs déjà joués."""
+        """Crée le prochain tour en respectant le système suisse."""
+
         if not tournament.rounds_list:
             self.round_view.display_no_tournament_started()
             return
@@ -187,61 +192,27 @@ class TournamentController:
             self.round_view.display_tournament_finished()
             return
 
-        # Calcul des scores totaux et historique des matchs
-        player_scores = {player_id: 0.0 for player_id in tournament.players}
-        previous_matches = set()
-
-        for round_data in tournament.rounds_list:
-            for match in round_data["matchs"]:
-                p1, s1 = match[0]
-                p2, s2 = match[1]
-                previous_matches.add(frozenset([p1, p2]))
-                player_scores[p1] += s1
-                player_scores[p2] += s2
-
-        # Tri des joueurs par score décroissant
+        player_scores = self.calculate_scores(tournament)
         sorted_players = sorted(player_scores.items(), key=lambda x: x[1], reverse=True)
-
-        # Affichage du classement actuel
         self.round_view.display_current_standings(sorted_players)
 
-        # Génération des paires en évitant les re-matchs
-        matches = []
-        used_players = set()
-
-        for i, (p1, _) in enumerate(sorted_players):
-            if p1 in used_players:
-                continue
-
-            # Chercher un adversaire qui n'a pas déjà joué contre p1
-            for j in range(i + 1, len(sorted_players)):
-                p2 = sorted_players[j][0]
-                if p2 not in used_players and frozenset([p1, p2]) not in previous_matches:
-                    matches.append(Match(p1, p2))
-                    used_players.update([p1, p2])
-                    break
-                elif frozenset([p1, p2]) in previous_matches:
-                    self.round_view.display_pairing_conflict(p1, p2)
-
+        matches = self.generate_swiss_pairs(sorted_players, tournament)
         if not matches:
             self.round_view.display_no_valid_pairings()
             return
 
-        # Création du nouveau tour
         round_number = len(tournament.rounds_list) + 1
         new_round = Round(name=f"Tour {round_number}", matchs=matches)
 
-        # Affichage et confirmation
-        self.round_view.display_round_creation(f"Tour {round_number}", matches)
-
+        self.round_view.display_round_creation(new_round.name, matches)
         if not self.round_view.confirm_round_start():
             print("Création du tour annulée.")
             return
 
-        # Saisie des scores
-        self.round_view.display_score_entry_header(f"Tour {round_number}")
-
+        self.round_view.display_score_entry_header(new_round.name)
         for match in matches:
+            if match.player_2 is None:
+                continue
             while True:
                 result = self.round_view.get_match_result(match)
                 if result:
@@ -254,8 +225,7 @@ class TournamentController:
         new_round.end_round()
         tournament.add_round(new_round.to_dict())
         self.update_tournament(tournament)
-
-        self.round_view.display_round_completed(f"Tour {round_number}")
+        self.round_view.display_round_completed(new_round.name)
 
     def show_final_ranking(self):
         """Affiche le classement final d'un tournoi."""
@@ -274,9 +244,11 @@ class TournamentController:
         for round_data in tournament.rounds_list:
             for match in round_data["matchs"]:
                 pid1, score1 = match[0]
-                pid2, score2 = match[1]
                 scores[pid1] += score1
-                scores[pid2] += score2
+
+                pid2, score2 = match[1]
+                if pid2 in scores:
+                    scores[pid2] += score2
 
         # Récupération des infos des joueurs
         all_players = load_players()
@@ -340,3 +312,47 @@ class TournamentController:
             tournaments.append(tournament)
 
         return tournaments
+
+    def calculate_scores(self, tournament):
+        """Calcule les scores des joueurs pour le tournoi."""
+        scores = {pid: 0.0 for pid in tournament.players}
+        for round_data in tournament.rounds_list:
+            for match in round_data["matchs"]:
+                p1, s1 = match[0]
+                p2, s2 = match[1]
+                scores[p1] += s1
+                if p2 in scores:  # ✅ évite les erreurs avec 'EXEMPT' ou None
+                    scores[p2] += s2
+        return scores
+
+    def generate_swiss_pairs(self, sorted_players, tournament):
+        previous_matches = set()
+        for round_data in tournament.rounds_list:
+            for match in round_data["matchs"]:
+                p1, _ = match[0]
+                p2, _ = match[1]
+                previous_matches.add(frozenset([p1, p2]))
+
+        matches = []
+        used = set()
+
+        for i, (p1, _) in enumerate(sorted_players):
+            if p1 in used:
+                continue
+            for j in range(i + 1, len(sorted_players)):
+                p2 = sorted_players[j][0]
+                if p2 not in used and frozenset([p1, p2]) not in previous_matches:
+                    matches.append(Match(p1, p2))
+                    used.update([p1, p2])
+                    break
+                elif frozenset([p1, p2]) in previous_matches:
+                    self.round_view.display_pairing_conflict(p1, p2)
+
+        # Ajouter joueur exempt si impair
+        remaining = [pid for pid, _ in sorted_players if pid not in used]
+        if len(remaining) == 1:
+            match = Match(remaining[0], None)
+            match.set_result(1.0, 0.0)
+            matches.append(match)
+
+        return matches

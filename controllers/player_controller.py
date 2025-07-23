@@ -58,16 +58,17 @@ class PlayerController:
         if not players:
             print("Aucun joueur dans la base de données.")
             return
-
+        # On demande le ID du joueur à l'utilisateur
         query = self.view.get_search_query().lower()
         if not query:
             return
 
-        # Recherche dans tous les champs
+        # Recherche dans tous les champs et on affiche le joueur s'il existe dans la base de données.
         results = []
         for player in players:
             if query in player.national_id.lower():
                 results.append(player)
+        # On affiche le resultat
         self.view.display_search_results(results)
 
     def save_players(self, players):
